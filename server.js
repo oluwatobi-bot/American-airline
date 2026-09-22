@@ -19,7 +19,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const upload = multer({ storage: multer.memoryStorage() });
 
 // --- ROOT ROUTE (Fixes "Cannot GET /" on Vercel) ---
-app.get('/', (req, res) => {
+// --- STATUS ROUTE (Moved from root so frontend HTML can load) ---
+app.get('/api/status', (req, res) => {
     res.status(200).json({ 
         success: true, 
         message: 'American Airlines Backend is live and running successfully!' 
