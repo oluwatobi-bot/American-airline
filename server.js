@@ -18,6 +18,14 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// --- ROOT ROUTE (Fixes "Cannot GET /" on Vercel) ---
+app.get('/', (req, res) => {
+    res.status(200).json({ 
+        success: true, 
+        message: 'American Airlines Backend is live and running successfully!' 
+    });
+});
+
 // --- SETTINGS ENDPOINT ROUTE (Updated to include PayPal) ---
 app.get('/api/settings', async (req, res) => {
     try {
