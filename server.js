@@ -11,7 +11,8 @@ app.use(express.json());
 
 // Serve static frontend files (index.html, images, css, etc.) from the current directory
 app.use(express.static(path.join(__dirname)));
-
+// --- ADD THIS LINE TO SERVE THE IMAGE FOLDER EXPLICITLY ---
+app.use('/image', express.static(path.join(__dirname, 'image')));
 // --- ADD THIS LINE TO FIX "Cannot GET /" ---
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
