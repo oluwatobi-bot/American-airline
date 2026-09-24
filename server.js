@@ -12,6 +12,11 @@ app.use(express.json());
 // Serve static frontend files (index.html, images, css, etc.) from the current directory
 app.use(express.static(path.join(__dirname)));
 
+// --- ADD THIS LINE TO FIX "Cannot GET /" ---
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
